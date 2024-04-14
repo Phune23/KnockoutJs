@@ -1,0 +1,67 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+/*=======================================================*/
+.khung {
+    border-style: solid;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 10px;
+    width: 700px;
+    height: 500px;
+    padding-left:10px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;
+}
+
+.khung_name {
+    border-style: dotted;
+    border-radius: 10px;
+    margin-bottom: 200px; /* ngoai khung */
+    margin-right: 10px;
+    margin-left: 10px;
+    padding-bottom: 10px; /* trong khung */
+    padding-left: 10px;
+}
+.khung_friends {
+    border-style: dotted;
+    border-radius: 10px;
+    margin-bottom: 10px; /* ngoai khung */
+    margin-right: 10px;
+    margin-left: -10px;
+    padding-bottom: 20px; /* trong khung */
+    padding-left: 10px;
+}
+.khung_button {
+    border-style: solid;
+    border-radius: 10px;
+    margin-bottom: 10px; /* ngoai khung */
+    margin-right: 10px;
+    margin-left: 100px;
+    padding-bottom: 10px; /* trong khung */
+    padding-left: 10px;
+    width: 200px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;
+}
+.cot_hai{
+    column-count:2;
+}

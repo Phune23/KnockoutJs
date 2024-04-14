@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<script src="~/lib/knockoutus/knockout-3.5.1.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+
+<div class="khung cot_hai">
+    <div class="khung_name">
+        <h2>Name</h2>
+        <div>
+            <p>FirstName: <span data-bind="text: firstName"></span></p> @* hiện tên đầu *@
+
+            <input data-bind="value: firstName, visible: isVisible" />  @* ô sửa đổi tên đầu *@
+
+            <p>LastName: <span data-bind="text: lastName"></span></p>   @* hiện tên cuối *@
+            <input data-bind="value: lastName" />  @* ô sửa đổi tên cuối *@
+
+            <p>FullName: <span data-bind="text: fullName"></span></p>   @* hiện tên đầu và cuối *@
+            <input data-bind="value: fullName" />  @* ô sửa đổi tên đầu và cuối *@
+            <br />
+            <hr />
+            <input type="checkbox" data-bind="checked: isVisible">Show First Name
+        </div>
+    </div>
+    <div class="khung_friends">
+        <h2>Friends (<span data-bind="text: friends().length"></span>)</h2>
+        <ul data-bind="foreach: friends">
+            @* vòng lặp in ra tên friend *@
+            <li class="cot_hai">
+                <div>
+                    <span data-bind="text: $data.name"></span>
+                </div>
+                <div>
+                    <button data-bind="click: remove">Remove</button> @* nút xóa friend *@
+                </div>
+            </li>
+        </ul>
+        <button data-bind="click: addFriend, enable: friends().length<10">Add Friend</button> @* nút thêm friend / enable: friends().length<10 dùng để giới hạn số lượng có thể add vào *@
+        <button data-bind="click: saveFriend">Save Friend</button> @* nút lưu friend *@
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+
+    function friend(name) { //tạo friends
+        return {
+            name: ko.observable(name),
+            remove: function () {
+                viewModel.friends.remove(this)
+            }
+        };
+    }
+
+    var viewModel = {
+        firstName: ko.observable("Phu"), //ko.observable sử dụng có thể thay đổi giá trị trong biến đó
+        lastName: ko.observable("ne"),
+        isVisible: ko.observable(true), //sử dụng để ẩn 
+        friends: ko.observableArray([ //danh sach friends default
+            new friend("D Linh"),
+            new friend("T Dung"),
+            new friend("H Dat"),
+            new friend("D Minh"),
+            new friend("N Luy"),
+            new friend("P Duy"),
+            new friend("H Quan"),
+            new friend("T Hien")
+        ]),
+
+        addFriend: function () { //hàm thêm bạn bè
+            this.friends.push(new friend("new friend"));
+        },
+
+        saveFriend: function () { //hàm lưu bạn bè
+            $.ajax({
+                url: "@Url.Action("Save")", //đường dẫn để post về controller hoặc APÍ
+                type: "POST", //kiểu post
+                dataType: "json", //đưa về chuỗi json
+                data: { data: ko.toJSON(this) },   //đưa this đg chọn đó vô data
+                success: function (result) { //sử lý thành công trả về message
+                    alert(result.message)
+                }
+            });
+        }
+    }
+
+    viewModel.fullName = ko.dependentObservable(function () { // .dependentObservable dùng để quan sát tự cập nhật thay đổi các giá trị
+        return this.firstName() + " " + this.lastName()
+    }, viewModel) //dùng để chỉ trỏ về viewModel
+
+    ko.applyBindings(viewModel); // applyBindings dùng để thực hiện bindings
+
+</script>
+
+
+
+
